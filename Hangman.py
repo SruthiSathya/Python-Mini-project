@@ -62,7 +62,7 @@ def hangman(levelStart,levelEnd):
             print ("Better luck next time :)")
             print ("The correct answer is", word)
             break
-          elif "_" not in dash_list :                #and chance != 0: #if all the guesses are correct and he guessed it with less than 5 mistakes then he wins
+          elif "_" not in dash_list :                 #if all the guesses are correct and he guessed it with less than 5 mistakes then he wins
             print ("Congrats! you won!! ") 
             break
 try:
