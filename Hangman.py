@@ -8,13 +8,11 @@ def hangman(LowerLimitOfPopulation, UpperLimitOfPopulation):
   country_array = []
   data = p.json()
   first_display = 0
-
+  
   for i in data:                                      # set difficulty by specifying the population
     if len(i["name"]) < 15 and LowerLimitOfPopulation < i["population"] < UpperLimitOfPopulation :                         
       country_array.append(i)                         #appending the selected countries to a list 
-
-  for j in country_array :
- #we are filtering out those countires that have space in their name to avoid complications in the game
+  for j in country_array :     # we are filtering out those countires that have space in their name to avoid complications in the game
     if j["name"].find(" ") > 0 :                     
       continue
     new_list_country.append(j)                        #appending the filtered countries to a new list 
@@ -24,14 +22,15 @@ def hangman(LowerLimitOfPopulation, UpperLimitOfPopulation):
   chance = 5   
   flag = 0
   word_list = list(word)
-
-  if flag==0:
+  
+  if flag==0:                                         # initially print dashes to reveal the length of the word to the user
     dash_incrementor = 0
     while dash_incrementor < len(word):
       dash_list.append("_")
       dash_incrementor = dash_incrementor + 1
     flag = flag+1 
-    print (" ".join(dash_list),"\n")                 # printing dashes to reveal the length of the word to the user 
+    print (" ".join(dash_list),"\n")    
+    
   if flag==1:
     while (chance >-2 and chance <6):
       user_try = input("enter a letter")
@@ -48,7 +47,6 @@ def hangman(LowerLimitOfPopulation, UpperLimitOfPopulation):
           print("Better luck next time :)")
           print ("The correct answer is", word)
           break
-
       else:
         start = 0                                     #start variable to check for repetition
         idx = 0  
@@ -81,11 +79,8 @@ try:
   elif choiceOfDifficulty == 3:
     LowerLimitOfPopulation = 0
     UpperLimitOfPopulation = 20000000
-    hangman(LowerLimitOfPopulation, UpperLimitOfPopulation) 
-  elif choiceOfDifficulty == 0:
-    print("You quit the game")
+    hangman(LowerLimitOfPopulation, UpperLimitOfPopulation)
   else:
-    print("Invalid response")
-    
+    print("Invalid response") 
 except ValueError:
   print ("Invalid response")
