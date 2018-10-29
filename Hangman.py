@@ -1,7 +1,7 @@
 import requests 
 import random
 
-def hangman(levelStart,levelEnd):  
+def hangman(LowerLimitOfPopulation, UpperLimitOfPopulation):  
   p = requests.get("http://restcountries.eu/rest/v2/all")
   new_list_country = []
   dash_list = []
@@ -9,16 +9,17 @@ def hangman(levelStart,levelEnd):
   data = p.json()
   first_display = 0
 
-  for i in data:
-    if levelStart < len(i["name"]) < levelEnd:       #confining the number of letters so as to set difficulty 
-      country_array.append(i)                        #appending the selected countries to a list 
+  for i in data:                                      # set difficulty by specifying the population
+    if len(i["name"]) < 15 and LowerLimitOfPopulation < i["population"] < UpperLimitOfPopulation :                         
+      country_array.append(i)                         #appending the selected countries to a list 
 
   for j in country_array :
-    if j["name"].find(" ") > 0 :                     # we are filtering out those countires that have space in their name to avoid complications in the game
+ #we are filtering out those countires that have space in their name to avoid complications in the game
+    if j["name"].find(" ") > 0 :                     
       continue
-    new_list_country.append(j)                       #appending the filtered countries to a new list 
+    new_list_country.append(j)                        #appending the filtered countries to a new list 
 
-  country = random.choice(new_list_country)          #selecting a country from the list
+  country = random.choice(new_list_country)           #selecting a country from the list
   word = country["name"].lower()
   chance = 5   
   flag = 0
@@ -62,28 +63,29 @@ def hangman(levelStart,levelEnd):
             print ("Better luck next time :)")
             print ("The correct answer is", word)
             break
-          elif "_" not in dash_list :                 #if all the guesses are correct and he guessed it with less than 5 mistakes then he wins
+ #if all the guesses are correct and he guessed it with less than 5 mistakes then he wins
+          elif "_" not in dash_list :                
             print ("Congrats! you won!! ") 
             break
 try:
   print ("Hello user!\nWelcome to hangman!\n ")
   choiceOfDifficulty = int(input("To choose you difficulty PRESS\n1 for easy \n2 for medium \n3 for hard \n"))
   if choiceOfDifficulty == 1:
-    easy_start = 0
-    easy_end = 5
-    hangman(easy_start,easy_end)
+    LowerLimitOfPopulation = 150000000
+    UpperLimitOfPopulation = 1377422166
+    hangman(LowerLimitOfPopulation, UpperLimitOfPopulation)
   elif choiceOfDifficulty == 2:
-    medium_start = 4
-    medium_end = 10
-    hangman(medium_start,medium_end)
+    LowerLimitOfPopulation = 20000000
+    UpperLimitOfPopulation = 150000000
+    hangman(LowerLimitOfPopulation, UpperLimitOfPopulation)
   elif choiceOfDifficulty == 3:
-    hard_start = 10
-    hard_end = 15
-    hangman(hard_start,hard_end) 
+    LowerLimitOfPopulation = 0
+    UpperLimitOfPopulation = 20000000
+    hangman(LowerLimitOfPopulation, UpperLimitOfPopulation) 
   elif choiceOfDifficulty == 0:
     print("You quit the game")
   else:
     print("Invalid response")
-
+    
 except ValueError:
   print ("Invalid response")
