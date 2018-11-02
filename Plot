@@ -67,3 +67,7 @@ fig = plt.figure(figsize=(10,6))
 ax1 = fig.add_axes([0,0,1,1])
 ax1.plot(stockData["Date"],stockData["Close Price"],color = "green", marker = "d")
 ax1.set_title(symbolHolder+ " Closing Stocks - for the past 21 days")
+
+
+
+print(d.datetime.strptime("21 Nov 06", "%d %b %y").strftime('%Y-%m-%d')) 
